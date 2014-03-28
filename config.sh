@@ -30,7 +30,7 @@ case `uname` in
 	exit -1
 esac
 
-GITREPO=${GITREPO:-"git://github.com/mozilla-b2g/b2g-manifest"}
+GITREPO=${GITREPO:-"file://home/sachin/github/b2g-manifest"}
 BRANCH=${BRANCH:-master}
 
 while [ $# -ge 1 ]; do
@@ -166,7 +166,10 @@ case "$1" in
 	echo DEVICE=flo >> .tmp-config &&
 	repo_sync $1
 	;;
-
+"zte-blade")
+       echo DEVICE="zte-blade" >> .tmp-config &&
+       repo_sync $1
+       ;;
 *)
 	echo "Usage: $0 [-cdflnq] (device name)"
 	echo "Flags are passed through to |./repo sync|."
@@ -201,6 +204,7 @@ case "$1" in
 	echo - emulator-x86
 	echo - emulator-x86-jb
 	echo - emulator-x86-kk
+        echo - zte-blade
 	exit -1
 	;;
 esac
