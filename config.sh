@@ -166,8 +166,8 @@ case "$1" in
 	echo DEVICE=flo >> .tmp-config &&
 	repo_sync $1
 	;;
-"zte-blade")
-       echo DEVICE="zte-blade" >> .tmp-config &&
+"blade")
+       echo DEVICE="blade" >> .tmp-config &&
        repo_sync $1
        ;;
 *)
@@ -204,7 +204,7 @@ case "$1" in
 	echo - emulator-x86
 	echo - emulator-x86-jb
 	echo - emulator-x86-kk
-        echo - zte-blade
+        echo - blade
 	exit -1
 	;;
 esac
