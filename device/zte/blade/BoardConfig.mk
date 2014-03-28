@@ -36,6 +36,9 @@ TARGET_BOARD_PLATFORM := msm7x27
 TARGET_BOOTLOADER_BOARD_NAME := blade
 TARGET_SPECIFIC_HEADER_PATH := device/zte/blade/include
 
+# Init
+TARGET_PROVIDES_INIT_RC := device/zte/blade/init.rc
+
 # Recovery
 BOARD_CUSTOM_GRAPHICS := ../../../device/zte/blade/recovery/graphics.c
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/zte/blade/recovery/recovery_ui.c
