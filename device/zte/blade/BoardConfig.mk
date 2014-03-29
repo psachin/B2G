@@ -22,10 +22,8 @@ USE_CAMERA_STUB := true
 -include vendor/zte/blade/BoardConfigVendor.mk
 
 # CPU
-TARGET_ARCH := arm
-TARGET_CPU_ABI := armeabi
-TARGET_CPU_ABI2 := armeabi-v6l
-TARGET_CPU_VARIANT := arm11
+TARGET_CPU_ABI := armeabi-v6l
+TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv6-vfp
 
 # Target and board properties
@@ -36,73 +34,57 @@ TARGET_BOARD_PLATFORM := msm7x27
 TARGET_BOOTLOADER_BOARD_NAME := blade
 TARGET_SPECIFIC_HEADER_PATH := device/zte/blade/include
 
-# Init
-TARGET_PROVIDES_INIT_RC := device/zte/blade/init.rc
-
 # Recovery
 BOARD_CUSTOM_GRAPHICS := ../../../device/zte/blade/recovery/graphics.c
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/zte/blade/recovery/recovery_ui.c
-TARGET_PREBUILT_RECOVERY_KERNEL := device/zte/blade/recovery/recovery_kernel
 TARGET_RECOVERY_INITRC := device/zte/blade/recovery/recovery.rc
-TARGET_RECOVERY_FSTAB := device/zte/blade/ramdisk/fstab.blade
 
 # Kernel
 TARGET_KERNEL_SOURCE := kernel/zte/zte-kernel-msm7x27
 TARGET_KERNEL_CONFIG := cyanogen_blade_defconfig
+TARGET_PREBUILT_RECOVERY_KERNEL := device/zte/blade/recovery_kernel
 BOARD_KERNEL_BASE := 0x02600000
 BOARD_KERNEL_CMDLINE := androidboot.hardware=blade console=null
 
 # WiFi
-BOARD_WPA_SUPPLICANT_DRIVER := WEXT
-WPA_SUPPLICANT_VERSION := VER_0_8_X
-BOARD_WLAN_DEVICE := ath6kl
-WIFI_DRIVER_MODULE_PATH := /system/wifi/ar6000.ko
-WIFI_DRIVER_MODULE_NAME := ar6000
-BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_ath6kl
+BOARD_WPA_SUPPLICANT_DRIVER := AR6000
+WPA_SUPPLICANT_VERSION      := VER_0_6_X
+BOARD_WLAN_DEVICE           := wlan0
+WIFI_DRIVER_MODULE_PATH     := /system/wifi/ar6000.ko
+WIFI_DRIVER_MODULE_NAME     := ar6000
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
-BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/zte/blade/bluetooth
 
-# Webkit
-ENABLE_WEBGL := true
-TARGET_FORCE_CPU_UPLOAD := true
+# GPS
+BOARD_GPS_LIBRARIES := libloc
+BOARD_USES_GPSSHIM := true
+BOARD_GPS_NEEDS_XTRA := true
+
+# USB mounting
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun0/file
+BOARD_UMS_LUNFILE := "/sys/devices/platform/msm_hsusb/gadget/lun0/file"
+
+# Browser
+WITH_JIT := true
+ENABLE_JSC_JIT := true
+JS_ENGINE := v8
+HTTP := chrome
 
 # QCOM
 BOARD_USES_QCOM_HARDWARE := true
+BOARD_USES_QCOM_LIBS := true
 COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
 
 # Graphics
-BOARD_EGL_CFG := device/zte/blade/prebuilt/system/lib/egl/egl.cfg
+TARGET_USES_GENLOCK := true
+BOARD_EGL_CFG := device/zte/blade/egl.cfg
 USE_OPENGL_RENDERER := true
-TARGET_QCOM_DISPLAY_VARIANT := legacy
 BOARD_ADRENO_DECIDE_TEXTURE_TARGET := true
+COMMON_GLOBAL_CFLAGS += -DREFRESH_RATE=60
+TARGET_FORCE_CPU_UPLOAD := true
 
-# Video
-TARGET_QCOM_LEGACY_OMX := true
-TARGET_QCOM_MEDIA_VARIANT := legacy
-COMMON_GLOBAL_CFLAGS += -DQCOM_NO_SECURE_PLAYBACK
-
-# Bootanimation
-TARGET_BOOTANIMATION_USE_RGB565 := true
-
-# Fonts
-SMALLER_FONT_FOOTPRINT := true
-
-# Camera
-TARGET_DISABLE_ARM_PIE := true
-BOARD_NEEDS_MEMORYHEAPPMEM := true
-
-# Dalvik
-TARGET_ARCH_LOWMEM := true
-
-# FM Radio
-BOARD_USES_STE_FMRADIO := true
-BOARD_HAVE_QCOM_FM := true
-COMMON_GLOBAL_CFLAGS += -DSTE_FM -DQCOM_FM_ENABLED
-
-# Hardware tunables framework
-BOARD_HARDWARE_CLASS := device/zte/blade/cmhw/
+ENABLE_WEBGL := true
 
 # dev:    size   erasesize  name
 # mtd0: 00500000 00020000 "recovery"
@@ -116,6 +98,8 @@ BOARD_HARDWARE_CLASS := device/zte/blade/cmhw/
 # mtd8: 00180000 00020000 "persist"
 BOARD_BOOTIMAGE_PARTITION_SIZE     := 0x00500000
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 0x00500000
-BOARD_SYSTEMIMAGE_PARTITION_SIZE   := 0x11e4b400
+BOARD_SYSTEMIMAGE_PARTITION_SIZE   := 0x0d200000
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x13ba0000
 BOARD_FLASH_BLOCK_SIZE := 131072
+
+TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT := device/zte/blade/releasetools/ota_from_target_files
